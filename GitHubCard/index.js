@@ -5,14 +5,14 @@ import axios from 'axios';
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+const cards = document.querySelector('.cards');
+
 axios.get('https://api.github.com/users/marktucker08')
   .then( res => {
-    res.forEach( item => {
-      let card = cardMaker(item);
-      const cards = document.querySelector('.cards');
+      let card = cardMaker(res.data);
       cards.appendChild(card);
     })
-  })
+
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -39,6 +39,16 @@ axios.get('https://api.github.com/users/marktucker08')
 */
 
 const followersArray = ["clintfix", "dustinmyers", "justsml", "luishrd", "bigknell"];
+const URL = 'https://api.github.com/users/'
+
+for (let i = 0; i < followersArray.length; i++) {
+  axios.get(URL + followersArray[i])
+    .then( res => {
+      console.log(res);
+      let card = cardMaker(res.data);
+      cards.appendChild(card);
+    })
+};
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
